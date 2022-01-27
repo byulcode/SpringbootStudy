@@ -90,34 +90,33 @@ public class MemberServiceImpl implements MemberService {
         Optional<MemberVO> result = memberMapper.loginProcess(memberVO);
 
         if(result.isPresent()){
-            // 1. refresh_token 테이블에 member 테이블의 id 값이 존재하면 토큰을 갱신한다.
+            // 로그인 result 이후
+            // 1. refresh_token 테이블에 member 테이블의 id 값이 존재하면 토큰을 갱신한다. update
             // 2. refresh_token 테이블에 member 테이블의 id 값이 존재하지 않으면 토큰을 생성 후 insert한다
             // 3. accessToken을 발급한다.
             // 4. refreshToken 발급한 정보와 accessToken 정보를 JSON으로 리턴.
-            Boolean existMemberId = refreshTokenService.existMemberId(result.get().getId());
+
+            // refresh_token 존재여부부
+           Boolean existMemberId = refreshTokenService.existMemberId(result.get().getId());
+
+           RefreshTokenVO refreshTokenVO = new RefreshTokenVO();
 
             if(existMemberId){
-                String accessToken = authService.generateToken(result.get().getUserId());
-                RefreshTokenVO refreshTokenVO = refreshTokenService.updateTokenCount(result.get().getId());
-                JwtAuthenticationResponse response = new JwtAuthenticationResponse();
-                response.setAccessToken(accessToken);
-                response.setRefreshToken(refreshTokenVO.getToken());
-                long instant = refreshTokenVO.getExpiryDate().getEpochSecond();
-                response.setExpiryDuration(instant);
-
-                return response;
+                // 갱신
+                refreshTokenVO = refreshTokenService.updateTokenCount(result.get().getId());
             }else {
-                String accessToken = authService.generateToken(result.get().getUserId());
-                RefreshTokenVO refreshTokenVO = refreshTokenService.insertToken(result.get().getId());
-                JwtAuthenticationResponse response = new JwtAuthenticationResponse();
-                response.setAccessToken(accessToken);
-                response.setRefreshToken(refreshTokenVO.getToken());
-                long instant = refreshTokenVO.getExpiryDate().getEpochSecond();
-                response.setExpiryDuration(instant);
-
-                return response;
+                // 생성
+                refreshTokenVO = refreshTokenService.insertToken(result.get().getId());
             }
 
+            String accessToken = authService.generateToken(result.get().getUserId());
+            JwtAuthenticationResponse response = new JwtAuthenticationResponse();
+            response.setAccessToken(accessToken);
+            response.setRefreshToken(refreshTokenVO.getToken());
+            long instant = refreshTokenVO.getExpiryDate().getEpochSecond();
+            response.setExpiryDuration(instant);
+
+            return response;
 
         }else {
             throw  new BadRequestException("사용자 정보가 없습니다.");

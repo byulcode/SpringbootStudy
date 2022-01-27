@@ -19,7 +19,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/api/**")
                 .excludePathPatterns(
-                        "/api/member/login", "/api/member/find/**"
+                        "/api/member/login", "/api/member/find/**", "/api/member/regenToken"
                 );
     }
 }

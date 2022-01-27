@@ -44,6 +44,9 @@ public class RestControlAdvice {
         return new ApiResponse(false, ex.getMessage(), ex.getClass().getName());
     }
 
-
+    @ExceptionHandler(value = RefreshTokenExpirationException.class)
+    public ApiResponse handleRefreshTokenExpirationException(RefreshTokenExpirationException ex){
+        return new ApiResponse(false, ex.getMessage(), ex.getClass().getName());
+    }
 
 }

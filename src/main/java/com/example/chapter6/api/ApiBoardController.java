@@ -37,10 +37,11 @@ public class ApiBoardController {
 
 
     // 게시물 목록
-    @GetMapping("/list")
+    @PostMapping("/list")
     public ResponseEntity boardList(
             @RequestBody SearchHelper searchHelper
             ) throws Exception {
+        logger.info(searchHelper.toString());
         HashMap<String, Object> result = boardService.selectBoardVO(searchHelper);
 
         return new ResponseEntity(result, HttpStatus.OK);
@@ -62,44 +63,50 @@ public class ApiBoardController {
 
     // 게시물 저장
     @PostMapping("/save")
-    public ApiResponse boardSave(
+    public ResponseEntity boardSave(
             @RequestBody @Valid BoardVO boardVO, Errors errors
     ) throws Exception {
-
+        boardVO.setRegId("api");
         HashMap<String, Object> errorMap = new HashMap<>();
 
         if(errors.hasErrors()){
             Map<String,String> validate = boardService.formValidation(errors);
 
             for(String key : validate.keySet()){
+                logger.info(key, validate.get(key));
                 errorMap.put(key,validate.get(key));
             }
-            return new ApiResponse(false,ExceptionMessage.SAVE_FAIL, errorMap);
+            return new ResponseEntity(errorMap, HttpStatus.CONFLICT );
         }
 
-        boardVO.setRegId("api");
+
         try{
             boardService.insertBoardVO(boardVO);
         }catch (Exception e){
             throw new InsertFailException(ExceptionMessage.SAVE_FAIL);
         }
 
-        return new ApiResponse(true,ExceptionMessage.SAVE_SUCCESS);
+        return new ResponseEntity("OK", HttpStatus.OK);
     }
 
     // 게시물 수정
     @PutMapping("/update")
-    public ApiResponse boardUpdate(
+    public ResponseEntity boardUpdate(
             @RequestBody BoardVO boardVO
     ) throws Exception {
         boardVO.setRegId("api");
 
-        try {
+        int id = boardVO.getId();
+
+        BoardVO exist = boardService.selectBoardVOById(id);
+
+        if(exist.getTitle() != null && exist.getContent() != null){
             boardService.updateBoardVO(boardVO);
-        }catch (Exception e){
-            throw new InsertFailException(ExceptionMessage.SAVE_FAIL);
+            return new ResponseEntity("OK", HttpStatus.OK);
+        }else {
+            throw new BadRequestException(ExceptionMessage.NOT_FOUND_ARTICLE);
         }
-        return new ApiResponse(true,ExceptionMessage.SAVE_SUCCESS);
+
     }
 
     // 게시물 삭제
@@ -111,16 +118,11 @@ public class ApiBoardController {
         BoardVO boardVO = boardService.selectBoardVOById(id);
 
         if(boardVO != null) {
-            try {
-                boardService.deleteById(id);
-            } catch (Exception e) {
-                throw new InsertFailException(ExceptionMessage.DELETE_FAIL);
-            }
+            boardService.deleteById(id);
+            return new ApiResponse(true,"삭제되었습니다.");
         }else{
-            throw new InsertFailException(ExceptionMessage.NOT_FOUND_ARTICLE);
+            throw new BadRequestException(ExceptionMessage.NOT_FOUND_ARTICLE);
         }
-
-        return new ApiResponse(true,ExceptionMessage.DELETE_SUCCESS);
     }
 
 }

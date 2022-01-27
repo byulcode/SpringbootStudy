@@ -2,6 +2,7 @@ package com.example.chapter6.config;
 
 import com.example.chapter6.jwt.JwtTokenValidator;
 import com.example.chapter6.model.MemberVO;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,14 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         String token =request.getHeader("Authorization");
+
+        logger.info(request.getMethod());
+
+        if(StringUtils.equals(request.getMethod(), "OPTIONS")){
+            logger.info("OPTIONS 메소드이다.");
+            return true;
+        }
+
         logger.info("token before- {}", token);
         token = token.replace("Bearer ","");
         logger.info("token after c- {}", token);

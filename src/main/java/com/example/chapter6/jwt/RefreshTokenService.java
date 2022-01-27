@@ -1,5 +1,6 @@
 package com.example.chapter6.jwt;
 
+import com.example.chapter6.exception.RefreshTokenExpirationException;
 import com.example.chapter6.exception.TokenRefreshException;
 import com.example.chapter6.mapper.RefreshTokenMapper;
 import com.example.chapter6.model.RefreshTokenVO;
@@ -24,6 +25,7 @@ public class RefreshTokenService {
         this.refreshTokenMapper = refreshTokenMapper;
     }
 
+    // token row 존재여부
     public Optional<RefreshTokenVO> selectByToken(String token) {
         return refreshTokenMapper.selectByToken(token);
     }
@@ -38,9 +40,10 @@ public class RefreshTokenService {
         return refreshTokenVO;
     }
 
-    public void verifyExpiration(RefreshTokenVO refreshTokenVO) throws TokenRefreshException {
+    // refresh_token 유효기간 검증
+    public void verifyExpiration(RefreshTokenVO refreshTokenVO){
         if (refreshTokenVO.getExpiryDate().compareTo(Instant.now()) < 0) {
-            throw new TokenRefreshException(refreshTokenVO.getToken(), "토큰이 만료되었습니다.");
+            throw new RefreshTokenExpirationException(refreshTokenVO.getToken(), "토큰 유효기간 만료.");
         }
     }
 

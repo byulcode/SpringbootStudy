@@ -51,7 +51,7 @@ public class BoardController {
     }
 
     //    게시물 목록
-    @RequestMapping("/list")
+    @PostMapping("/list")
     public String boardList(
             @ModelAttribute SearchHelper searchHelper,
             Model model

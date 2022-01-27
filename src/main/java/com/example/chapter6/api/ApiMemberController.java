@@ -45,6 +45,7 @@ public class ApiMemberController {
         this.applicationEventPublisher = applicationEventPublisher;
     }
 
+    // 로그아웃
     @GetMapping("/logout")
     public ApiResponse logout(HttpServletRequest request){
 
@@ -68,6 +69,18 @@ public class ApiMemberController {
 
         JwtAuthenticationResponse result = memberService.loginProcess(memberVO);
         return ResponseEntity.ok(result);
+    }
+
+    // 토큰 갱신
+    @GetMapping("/regenToken")
+    public ResponseEntity regenToken(@RequestParam(value = "refreshToken", defaultValue = "") String refreshToken){
+
+        if(refreshToken.equals("")){
+            throw new BadRequestException("리프레시 토큰이 없습니다.");
+        }else {
+            JwtAuthenticationResponse response = authService.regenToken(refreshToken);
+            return ResponseEntity.ok(response);
+        }
     }
 
     @GetMapping("/apiTest")
@@ -164,7 +177,7 @@ public class ApiMemberController {
                 logger.info("pw -{}", pw);
                 memberVO.setPassword(pw);
                 memberService.updatePassword(memberVO);
-                return new ApiResponse(false,"변경된 비밀번호는 " + pw + "입니다.");
+                return new ApiResponse(true,"변경된 비밀번호는 " + pw + "입니다.");
             }
         }
         throw new BadRequestException(ExceptionMessage.EMPTY_INFO);
