@@ -1,0 +1,438 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+    <header>
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="bootstrap" viewBox="0 0 118 94">
+            <title>Bootstrap</title>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z"></path>
+        </symbol>
+        <symbol id="home" viewBox="0 0 16 16">
+            <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"/>
+        </symbol>
+        <symbol id="speedometer2" viewBox="0 0 16 16">
+            <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4zM3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.389.389 0 0 0-.029-.518z"/>
+            <path fill-rule="evenodd" d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A7.988 7.988 0 0 1 0 10zm8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3z"/>
+        </symbol>
+        <symbol id="table" viewBox="0 0 16 16">
+            <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
+        </symbol>
+        <symbol id="people-circle" viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+        </symbol>
+        <symbol id="grid" viewBox="0 0 16 16">
+            <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"/>
+        </symbol>
+    </svg>
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+                <span class="fs-4">Simple header</span>
+            </a>
+
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a href="index.html" class="nav-link" aria-current="page">Home</a></li>
+                <li class="nav-item"><a href="board.html" class="nav-link">공지사항</a></li>
+                <li class="nav-item"><a href="gallery.html" class="nav-link">갤러리</a></li>
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">로그인</a>
+                </li>
+            </ul>
+        </header>
+    </div>
+</header>
+<section class="container">
+    <h2 class="visually-hidden">게시물 목록</h2>
+    <form method="post" id="searchForm">
+        <fieldset class="d-flex justify-content-end mb-1">
+            <legend class="visually-hidden">검색</legend>
+            <div class="col-auto">
+                <select class="form-select" name="srchType" id="srchType" aria-label="검색 분류">
+                    <option value="title" selected>제목</option>
+                    <option value="content">내용</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" name="srchKeyword" id="srchKeyword" class="form-control" aria-describedby="검색어" value="" />
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-primary" id="btnSearch" type="submit">검색</button>
+            </div>
+        </fieldset>
+    </form>
+    <div>
+        <table class="table table-striped mb-3">
+            <caption class="visually-hidden">게시물 목록</caption>
+            <colgroup>
+                <col style="width: 50px;">
+                <col style="width: 80px;">
+                <col>
+                <col style="width: 120px;">
+                <col style="width: 170px;">
+                <col style="width: 80px;">
+            </colgroup>
+            <thead>
+            <tr class="text-center">
+                <th>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="checkAll">
+                        <label class="form-check-label visually-hidden" for="checkAll">
+                            전체선택
+                        </label>
+                    </div>
+                </th>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
+                <th>조회수</th>
+            </tr>
+            </thead>
+            <tbody id="dataList">
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-between mb-3">
+            <button type="button" id="btnDel" class="btn btn-danger">삭제</button>
+            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#writeModal">글쓰기</button>
+        </div>
+    </div>
+    <div class="d-grid gap-2">
+        <button type="button" id="btnMore" class="btn btn-primary">더보기</button>
+    </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>    
+
+//게시글 보기
+function viewArticle(id){
+    var myModal = new bootstrap.Modal(document.getElementById('readModal'), {
+        keyboard: false
+    });
+    if(id) {
+        instance.get('/board/view/' + id)
+            .then((res) => {
+                console.log(res);
+                $('#modalTitle').text(res.data.title);
+                $('#modalWriter').text(res.data.regId);
+                $('#modalDate').text(res.data.regDate);
+                $('#modalCnt').text(res.data.count);
+                $('#modalContent').text(res.data.content);
+                $('#modalDel, #btnModify').attr('data-rel', res.data.id);
+                myModal.toggle();
+            })
+
+    }else {
+        alert('id값이 없습니다.');
+    }
+}
+
+
+$(function(){
+
+    // 모달에서 게시물 삭제
+    $('#modalDel').click(function(){
+        const id = $(this).data('rel');
+        if(id){
+            instance.delete('/board/delete/' + id)
+            .then((res) => {
+                if(res.data.success){
+                    alert(res.data.data);
+                    $('#dataList').empty();
+                    pageNumber = 1;
+                    generateList(1);
+                }
+            });
+        }
+    });
+    
+    //모달에서 글 수정 클릭
+    $('#btnModify').click(function(){
+        const id = $(this).data('rel');
+        $('.btn-close').click();
+        var writeModal = new bootstrap.Modal(document.getElementById('writeModal'), {
+            keyboard: false
+        });
+        writeModal.show();
+        if(id) {
+        instance.get('/board/view/' + id)
+            .then((res) => {
+                console.log(res);
+                $('#title').val(res.data.title);
+                $('#regId').val(res.data.regId);
+                $('#content').val(res.data.content);
+                $('#id').val(res.data.id);
+                $('#code').val(res.data.code);
+                //$('#modalDel, #btnModify').attr('data-rel', res.data.id);
+                myModal.toggle();
+            })
+
+    }else {
+        alert('id값이 없습니다.');
+    }
+    });
+
+    // 글 저장
+    $('#btnWriteArticle').click(function(){
+        const boardVO = new Object();
+        boardVO.code = 1000;
+        boardVO.title = $('#title').val();
+        boardVO.content = $('#content').val();
+        boardVO.regId = $('#regId').val();
+        boardVO.id = $('#id').val();
+
+        if(boardVO.code && boardVO.title && boardVO.content && boardVO.regId){
+            if(boardVO.id > 0){
+                instance.put('/board/update', boardVO)
+                .then((res) => {
+                    if(res.data === 'OK'){
+                        alert('저장 되었습니다.'); 
+                        location.reload();
+                    }
+                });
+            }else{
+                instance.post('/board/save', boardVO)
+                .then((res) => {
+                    if(res.data === 'OK'){
+                        alert('저장 되었습니다.'); 
+                        location.reload();
+                    }
+                });
+            }
+        }
+    });
+});
+
+</script>
+
+    <footer>
+    <div class="container">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <div class="col-md-4 d-flex align-items-center">
+                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                    <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+                </a>
+                <span class="text-muted">&copy; 2021 Company, Inc</span>
+            </div>
+
+            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+                <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"/></svg></a></li>
+                <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"/></svg></a></li>
+                <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"/></svg></a></li>
+            </ul>
+        </footer>
+    </div>
+</footer>
+  
+<!-- 글쓰기 Modal -->
+<div class="modal fade" id="writeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">글쓰기</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form  method="post" id="writeForm">
+                    <legend class="visually-hidden">게시물 작성</legend>
+                    <input type="hidden" id="id" name="id" value="">
+                    <input type="hidden" id="code" name="code" value="">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">제목</label>
+                        <input type="text" class="form-control" id="title" name="title" placeholder="제목" value="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="regId" class="form-label">작성자</label>
+                        <input type="text" class="form-control" id="regId" name="regId" placeholder="작성자" value="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="content" class="form-label">내용</label>
+                        <textarea class="form-control" id="content" name="content" rows="10" placeholder="내용" ></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <input type="file" name="file" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <input type="file" name="file" class="form-control">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <button type="button" id="btnWriteArticle" class="btn btn-primary">저장</button>
+            </div>
+        </div>
+    </div>
+</div>
+  
+<!-- 글읽기 Modal -->
+<div class="modal fade" id="readModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">글읽기</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <header class="alert alert-success" role="alert">
+                    <h4 class="alert-heading" id="modalTitle"></h4>
+                    <hr>
+                    <p class="mb-0 text-end">
+                        <span class="ms-3">작성자 : <span id="modalWriter"></span></span>
+                        <span class="ms-3">작성일 : <span id="modalDate"></span></span>
+                        <span class="ms-3">조회수 : <span id="modalCnt"></span></span>
+                    </p>
+                </header>
+                <section>
+                    <p class="h6 mb-5" id="modalContent"></p>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnModify" class="btn btn-warning">수정</button>
+                <button type="button" id="modalDel" class="btn btn-danger">삭제</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let accessToken = sessionStorage.getItem("accessToken");
+let refreshToken = sessionStorage.getItem("refreshToken");
+let pageNumber = 1;
+//axios instance 생성
+    const instance = axios.create({
+        baseURL: 'http://localhost:8080/api',
+    });
+if(accessToken && refreshToken){
+
+    // request 전의 interceptor
+    instance.interceptors.request.use(
+        (config) => {
+            config.headers.Authorization = accessToken;
+            return config;
+        },
+        (error) => {
+            return Promise.reject(error);
+        }
+    );
+
+    // 1. 토큰 만료시 리프레시 토큰으로 조회해서 엑세스 토큰과 리프레시 토큰을 다시 받는다
+    // 2. 기존 리퀘스트 정보에 대한 처리
+
+    // response 전의 interceptor
+    instance.interceptors.response.use(
+        (response) => response,
+        async (error) => {
+            console.log(error);
+            const originalRequest = error.config;
+
+            if(error.response && !originalRequest._retry &&
+            (
+                error.response.status === 406 || error.response.status === 403 || error.response.status === 401
+            )){
+                // 인증 오류 = 토큰 만료
+                // 토큰 다시 받기 로직
+                originalRequest._retry = true;
+
+                const responseData = await axios.get('http://localhost:8080/api/member/regenToken?refreshToken=' + refreshToken);
+
+                sessionStorage.setItem("accessToken", responseData.data.tokenType + responseData.data.accessToken);
+                sessionStorage.setItem("refreshToken", responseData.data.refreshToken);
+
+                accessToken = sessionStorage.getItem("accessToken");
+                refreshToken = sessionStorage.getItem("refreshToken");
+
+                instance.defaults.headers.Authorization = accessToken;
+
+                return instance(originalRequest);
+            }
+
+            return Promise.reject(error);
+        }
+    );
+
+
+    generateList(pageNumber);
+
+}else {
+    console.log('토큰 정보 없음');
+}
+
+// 게시물 목록 호출
+function generateList(page){
+    const searchHelper = new Object();
+    searchHelper.srchKeyword = $('#srchKeyword').val();
+    searchHelper.srchType = $('#srchType option:selected').val();
+    searchHelper.srchCode = 1000;
+    searchHelper.page = page;
+
+    instance.post('/board/list', searchHelper)
+        .then((res) => {
+            const dataList = res.data.list;
+
+            let resultHtml= '';
+
+            for(let i=0; i<res.data.list.length; i++){
+                resultHtml += '<tr>';
+                resultHtml += '<td class="text-center">';
+                resultHtml += '<div class="form-check">';
+                resultHtml += '     <input class="form-check-input delChk" type="checkbox" name="del[]" value="'+ dataList[i].id + '">';
+                resultHtml += '     <label class="form-check-label visually-hidden" for="">삭제 체크</label>';
+                resultHtml += '</div>';
+                resultHtml += '</td>';
+                resultHtml += '<td class="text-center">' + dataList[i].id + '</td>';
+                resultHtml += '<td><button type="button" onClick="viewArticle('+dataList[i].id+');" style="background: transparent; border:0; outline:0; color:blue; text-decoration:underline;">' 
+                    + dataList[i].title +'</button></td>';
+                resultHtml += '<td class="text-center">' + dataList[i].regId + '</td>';
+                resultHtml += '<td class="text-center">' + dataList[i].regDate + '</td>';
+                resultHtml += '<td class="text-center">' + dataList[i].count + '</td>';
+                resultHtml += '<tr>';
+            }
+            $('#dataList').append(resultHtml);
+
+            if(res.data.searchHelper.totalPageCnt <= pageNumber) $('#btnMore').hide();
+
+            pageNumber++;
+        });
+}
+
+// 더보기
+$('#btnMore').click(function(){
+    generateList();
+});
+// 검색
+$('#searchForm').submit(function(e){
+    e.preventDefault();
+    $('#dataList').empty();
+    pageNumber = 1;
+    generateList(1);
+});
+// 게시물 삭제
+$('#btnDel').click(function(){
+    for(let i=0; i<$('input[type=checkbox]:checked').length; i++){
+        const id = $('input[type=checkbox]:checked')[i].value;    
+        instance.delete('/board/delete/' + id)
+            .then((res) => {
+                if(res.data.success){
+                    alert(res.data.data);
+                    $('#dataList').empty();
+                    pageNumber = 1;
+                    generateList(1);
+                }
+            });
+        }
+});
+</script>
+</body>
+</html>
