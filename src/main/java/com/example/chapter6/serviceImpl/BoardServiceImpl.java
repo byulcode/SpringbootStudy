@@ -59,6 +59,12 @@ public class BoardServiceImpl implements BoardService {
         return resultMap;
     }
 
+    // 추가해봄(게시물 목록)
+    @Override
+    public List<BoardVO> selectBoardVO() {
+        return boardMapper.selectBoardVO();
+    }
+
     // 게시물 조회
     @Override
     public BoardVO selectBoardVOById(int id) throws Exception {
@@ -68,7 +74,7 @@ public class BoardServiceImpl implements BoardService {
 
     // 게시물 수정
     @Override
-    public void updateBoardVO(BoardVO boardVO) throws Exception {
+    public void updateBoardVO(BoardVO boardVO) {
         boardMapper.updateBoardVO(boardVO);
     }
 

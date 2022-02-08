@@ -62,9 +62,17 @@
         </where>
     </select>
     
-<!--    게시물 id로 찾기-->
+<!--    게시물 id로 선택-->
     <select id="selectBoardVOById" parameterType="int" resultType="BoardVO">
-        select *
+        select
+            id,
+            code,
+            title,
+            content,
+            count,
+            reg_id,
+            reg_date,
+            mod_date
         from board
         where id = #{id}
     </select>

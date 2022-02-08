@@ -11,15 +11,18 @@ public interface BoardMapper {
 
     void insertBoardVO(BoardVO boardVO) throws Exception;
 
+    List<BoardVO> selectBoardVO();
+
     List<BoardVO> selectBoardVO(SearchHelper searchHelper) throws Exception;
 
     int countBoardVO(SearchHelper searchHelper) throws Exception;
 
     BoardVO selectBoardVOById(int id) throws Exception;
 
-    void updateBoardVO(BoardVO boardVO) throws Exception;
+    void updateBoardVO(BoardVO boardVO);
 
     void deleteById(int id) throws Exception;
 
-    void updateCount(int id) throws Exception;
+    void updateCount(int id);
+
 }

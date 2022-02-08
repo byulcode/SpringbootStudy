@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @NoArgsConstructor
-public class BoardVO{
+public class BoardVO extends SearchHelper{
 
     private int id = 0;
-    private int code = 1000;
+    private int code;
     @NotBlank
     private String title;
     @NotBlank

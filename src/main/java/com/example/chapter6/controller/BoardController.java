@@ -65,7 +65,7 @@ public class BoardController {
         return "board/list";
     }
 
-//    게시물 조회
+//    게시물 조회(새로고침시 조회수 증가 -> 수정 필요)
     @RequestMapping("/view")
     public String boardView(
             @RequestParam(value = "id", defaultValue = "0") int id,
@@ -107,7 +107,6 @@ public class BoardController {
     ) {
 //        계정을 따라가도록 수정 해야함
         BoardVO boardVO = new BoardVO();
-        boardVO.setCode(1000);
         model.addAttribute("boardVO", boardVO);
         model.addAttribute("searchHelper", searchHelper);
         return "board/write";
@@ -130,14 +129,14 @@ public class BoardController {
             boardVO.setRegId(userId);
 
             if(boardVO.getId() > 0){
-                // 수정
+                // 수정 (아이디 비교해서 수정하는 부분도 나중에 추가하기)
                 String regId = boardVO.getRegId();
                 boardService.updateBoardVO(boardVO);
             } else {
                 // 저장
                 boardService.insertBoardVO(boardVO);
             }
-
+//  파일 저장에 오류가 있음
 //            for (int i = 0; i < multipartFile.size(); i++){
 //               UploadFileVO uploadFileVO = uploadFileService.saveFile(multipartFile.get(i));
 //               logger.info("uploadFileVO - {}" , uploadFileVO);
@@ -157,7 +156,7 @@ public class BoardController {
     }
 
 //    게시물 수정하러 글쓰기 페이지로 이동
-    @GetMapping("/modify")
+    @RequestMapping("/modify")
     public String boardModify(
             @RequestParam(value = "id") int id,
             @ModelAttribute SearchHelper searchHelper,
