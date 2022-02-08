@@ -1,7 +1,7 @@
-package com.example.chapter6.member.controller;
+package com.example.chapter6.controller;
 
 import com.example.chapter6.Util.Util;
-import com.example.chapter6.member.service.MemberService;
+import com.example.chapter6.service.MemberService;
 import com.example.chapter6.model.MemberVO;
 import com.example.chapter6.model.Message;
 import org.slf4j.Logger;
@@ -84,6 +84,8 @@ public class MemberController {
 
             Boolean result = memberService.loginProcess(memberVO, request);
 
+            logger.info("로그인 - {}", result);
+
             if(result == false){
                 return "redirect:/member/login";
             }
@@ -97,7 +99,7 @@ public class MemberController {
 //    로그아웃
     @GetMapping("/logout")
     public String logout(HttpServletRequest request){
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false); //세션을 신규로 생성하지 않도록 false
         if(session != null)
             session.invalidate();
 
@@ -155,14 +157,14 @@ public class MemberController {
         return "member/find_pw";
     }
 
-//    비밀번호 찾아서 바꾸기
+//    비밀번호 찾아서 바꾸기 - 바꿔지기는 하는데 alert 창이 바로 사라져버림. 수정필요
     @PostMapping("/find_pw")
     public ModelAndView findPwPost(
             @RequestParam(value = "name", defaultValue = "") String name,
             @RequestParam(value = "email", defaultValue = "") String email,
             @RequestParam(value = "userId", defaultValue = "") String userId,
             ModelAndView mav
-    ) throws Exception {
+    )  {
         if(!name.equals("") && !email.equals("") && !userId.equals("")){
             MemberVO memberVO = new MemberVO();
             memberVO.setName(name);

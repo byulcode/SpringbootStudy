@@ -1,7 +1,7 @@
-package com.example.chapter6.board.controller;
+package com.example.chapter6.controller;
 
 import com.example.chapter6.Util.MediaUtil;
-import com.example.chapter6.board.service.BoardService;
+import com.example.chapter6.service.BoardService;
 import com.example.chapter6.file.FIleMapService;
 import com.example.chapter6.file.UploadFileService;
 import com.example.chapter6.model.*;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,7 +30,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -51,7 +49,7 @@ public class BoardController {
     }
 
     //    게시물 목록
-    @PostMapping("/list")
+    @RequestMapping("/list")
     public String boardList(
             @ModelAttribute SearchHelper searchHelper,
             Model model
@@ -129,7 +127,6 @@ public class BoardController {
         if(sessionResult != null){
             // 저장 또는 수정
             String userId = sessionResult.getUserId();
-
             boardVO.setRegId(userId);
 
             if(boardVO.getId() > 0){
@@ -141,14 +138,14 @@ public class BoardController {
                 boardService.insertBoardVO(boardVO);
             }
 
-            for (int i = 0; i < multipartFile.size(); i++){
-               UploadFileVO uploadFileVO = uploadFileService.saveFile(multipartFile.get(i));
-               logger.info("uploadFileVO - {}" , uploadFileVO);
-               FileMapVO fileMapVO = new FileMapVO();
-               fileMapVO.setFileId(uploadFileVO.getId());
-               fileMapVO.setBoardId(boardVO.getId());
-               fIleMapService.insertFileMap(fileMapVO);
-            }
+//            for (int i = 0; i < multipartFile.size(); i++){
+//               UploadFileVO uploadFileVO = uploadFileService.saveFile(multipartFile.get(i));
+//               logger.info("uploadFileVO - {}" , uploadFileVO);
+//               FileMapVO fileMapVO = new FileMapVO();
+//               fileMapVO.setFileId(uploadFileVO.getId());
+//               fileMapVO.setBoardId(boardVO.getId());
+//               fIleMapService.insertFileMap(fileMapVO);
+//            }
 
         }else{
             // 세션 없음 (로그인 안됨)

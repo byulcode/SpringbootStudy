@@ -1,4 +1,4 @@
-package com.example.chapter6.member.service;
+package com.example.chapter6.service;
 
 import com.example.chapter6.model.MemberVO;
 import com.example.chapter6.payload.response.JwtAuthenticationResponse;

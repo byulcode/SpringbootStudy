@@ -14,7 +14,7 @@ public interface MemberMapper {
 
     void insertMember(MemberVO memberVO) throws Exception;
 
-    Optional<MemberVO> loginProcess(MemberVO memberVO);
+    MemberVO loginProcess(MemberVO memberVO);
 
     String findUserId(MemberVO memberVO);
 

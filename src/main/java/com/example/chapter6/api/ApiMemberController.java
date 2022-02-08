@@ -8,14 +8,11 @@ import com.example.chapter6.exception.InsertFailException;
 import com.example.chapter6.exception.ResourceAlreadyInUseException;
 import com.example.chapter6.exception.UserNotFoundException;
 import com.example.chapter6.jwt.AuthService;
-import com.example.chapter6.member.service.MemberService;
-import com.example.chapter6.model.BoardVO;
+import com.example.chapter6.service.MemberService;
 import com.example.chapter6.model.MemberVO;
 import com.example.chapter6.payload.request.LoginRequest;
 import com.example.chapter6.payload.response.ApiResponse;
 import com.example.chapter6.payload.response.JwtAuthenticationResponse;
-import lombok.Value;
-import org.apache.tomcat.util.descriptor.web.ApplicationParameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
@@ -27,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/member")

@@ -7,10 +7,9 @@
    <script src="/smarteditor2/js/HuskyEZCreator.js"></script>
 </header>
 <body>
-    <form id="writeForm" class="container" layout:fragment="content" method="post" enctype="multipart/form-data" action="/board/list">
+    <form id="writeForm" class="container" layout:fragment="content" method="post" enctype="multipart/form-data" action="/board/save">
         <legend class="visually-hidden">게시물 작성</legend>
-        <input type="hidden" class="form-control" id="id" name="id" th:value="${boardVO.id}">
-        <input type="hidden" class="form-control" id="code" name="code" th:value="${boardVO.code}">
+        <input type="hidden" class="form-control" id="code" name="code" th:value=1000>
         <div class="mb-3">
             <label for="title" class="form-label">제목</label>
             <input type="text" class="form-control" id="title" name="title" placeholder="제목" th:value="${boardVO.title}">

@@ -1,6 +1,6 @@
-package com.example.chapter6.board.serviceImpl;
+package com.example.chapter6.serviceImpl;
 
-import com.example.chapter6.board.service.BoardService;
+import com.example.chapter6.service.BoardService;
 import com.example.chapter6.mapper.BoardMapper;
 import com.example.chapter6.model.BoardVO;
 import com.example.chapter6.model.SearchHelper;

@@ -1,16 +1,15 @@
-package com.example.chapter6.member.serviceImpl;
+package com.example.chapter6.serviceImpl;
 
 import com.example.chapter6.exception.BadRequestException;
 import com.example.chapter6.jwt.AuthService;
 import com.example.chapter6.jwt.RefreshTokenService;
 import com.example.chapter6.mapper.MemberMapper;
-import com.example.chapter6.member.service.MemberService;
+import com.example.chapter6.service.MemberService;
 import com.example.chapter6.model.MemberVO;
 import com.example.chapter6.model.RefreshTokenVO;
 import com.example.chapter6.payload.response.JwtAuthenticationResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
@@ -72,9 +71,9 @@ public class MemberServiceImpl implements MemberService {
 //    로그인 처리
     @Override
     public Boolean loginProcess(MemberVO memberVO, HttpServletRequest request)  {
-        Optional<MemberVO> result = memberMapper.loginProcess(memberVO);
+        MemberVO result = memberMapper.loginProcess(memberVO);
 
-        if(result.isPresent()){
+        if(result != null){
             //세션 정보 생성
             HttpSession session = request.getSession();
             session.setAttribute("memberVO", result);
@@ -84,44 +83,49 @@ public class MemberServiceImpl implements MemberService {
         return false;
     }
 
-    //api 로그인 처리
-    @Override
+    @Override //없애야됨
     public JwtAuthenticationResponse loginProcess(MemberVO memberVO) {
-        Optional<MemberVO> result = memberMapper.loginProcess(memberVO);
-
-        if(result.isPresent()){
-            // 로그인 result 이후
-            // 1. refresh_token 테이블에 member 테이블의 id 값이 존재하면 토큰을 갱신한다. update
-            // 2. refresh_token 테이블에 member 테이블의 id 값이 존재하지 않으면 토큰을 생성 후 insert한다
-            // 3. accessToken을 발급한다.
-            // 4. refreshToken 발급한 정보와 accessToken 정보를 JSON으로 리턴.
-
-            // refresh_token 존재여부부
-           Boolean existMemberId = refreshTokenService.existMemberId(result.get().getId());
-
-           RefreshTokenVO refreshTokenVO = new RefreshTokenVO();
-
-            if(existMemberId){
-                // 갱신
-                refreshTokenVO = refreshTokenService.updateTokenCount(result.get().getId());
-            }else {
-                // 생성
-                refreshTokenVO = refreshTokenService.insertToken(result.get().getId());
-            }
-
-            String accessToken = authService.generateToken(result.get().getUserId());
-            JwtAuthenticationResponse response = new JwtAuthenticationResponse();
-            response.setAccessToken(accessToken);
-            response.setRefreshToken(refreshTokenVO.getToken());
-            long instant = refreshTokenVO.getExpiryDate().getEpochSecond();
-            response.setExpiryDuration(instant);
-
-            return response;
-
-        }else {
-            throw  new BadRequestException("사용자 정보가 없습니다.");
-        }
+        return null;
     }
+
+//    //api 로그인 처리
+//    @Override
+//    public JwtAuthenticationResponse loginProcess(MemberVO memberVO) {
+//        MemberVO result = memberMapper.loginProcess(memberVO);
+//
+//        if(result.isPresent()){
+//            // 로그인 result 이후
+//            // 1. refresh_token 테이블에 member 테이블의 id 값이 존재하면 토큰을 갱신한다. update
+//            // 2. refresh_token 테이블에 member 테이블의 id 값이 존재하지 않으면 토큰을 생성 후 insert한다
+//            // 3. accessToken을 발급한다.
+//            // 4. refreshToken 발급한 정보와 accessToken 정보를 JSON으로 리턴.
+//
+//            // refresh_token 존재여부부
+//           Boolean existMemberId = refreshTokenService.existMemberId(result.get().getId());
+//
+//           RefreshTokenVO refreshTokenVO = new RefreshTokenVO();
+//
+//            if(existMemberId){
+//                // 갱신
+//                refreshTokenVO = refreshTokenService.updateTokenCount(result.get().getId());
+//            }else {
+//                // 생성
+//                refreshTokenVO = refreshTokenService.insertToken(result.get().getId());
+//            }
+//
+//            String accessToken = authService.generateToken(result.get().getUserId());
+//            JwtAuthenticationResponse response = new JwtAuthenticationResponse();
+//            response.setAccessToken(accessToken);
+//            response.setRefreshToken(refreshTokenVO.getToken());
+//            long instant = refreshTokenVO.getExpiryDate().getEpochSecond();
+//            response.setExpiryDuration(instant);
+//
+//            return response;
+//
+//        }else {
+//            throw  new BadRequestException("사용자 정보가 없습니다.");
+//        }
+//    }
 
 //    아이디 찾기
     @Override

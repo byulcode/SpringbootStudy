@@ -25,42 +25,42 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        String token =request.getHeader("Authorization");
-
-        logger.info(request.getMethod());
-
-        if(StringUtils.equals(request.getMethod(), "OPTIONS")){
-            logger.info("OPTIONS 메소드이다.");
-            return true;
-        }
-
-        logger.info("token before- {}", token);
-        token = token.replace("Bearer ","");
-        logger.info("token after c- {}", token);
-
-        // 토큰 검증 메서드
-        Boolean valid = jwtTokenValidator.validateToken(token);
-
-        if(valid){
-            return true;
-        }else {
-            return false;
-        }
-//        HttpSession session = request.getSession();
+//        String token =request.getHeader("Authorization");
 //
-//        MemberVO m = new MemberVO();
-//        m.setUserId("test");
-//        session.setAttribute("memberVO", m);
+//        logger.info(request.getMethod());
 //
-//        MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
-//
-//        logger.info("로그인 인터셉트 - {}", memberVO);
-//
-//        if(memberVO != null){
+//        if(StringUtils.equals(request.getMethod(), "OPTIONS")){
+//            logger.info("OPTIONS 메소드이다.");
 //            return true;
-//        }else{
-//            response.sendRedirect("/member/login");
+//        }
+//
+//        logger.info("token before- {}", token);
+//        token = token.replace("Bearer ","");
+//        logger.info("token after c- {}", token);
+//
+//        // 토큰 검증 메서드
+//        Boolean valid = jwtTokenValidator.validateToken(token);
+//
+//        if(valid){
+//            return true;
+//        }else {
 //            return false;
 //        }
+        HttpSession session = request.getSession();
+
+        MemberVO m = new MemberVO();
+        m.setUserId("test");
+        session.setAttribute("memberVO", m);
+
+        MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+
+        logger.info("로그인 인터셉트 - {}", memberVO);
+
+        if(memberVO != null){
+            return true;
+        }else{
+            response.sendRedirect("/member/login");
+            return false;
+        }
     }
 }

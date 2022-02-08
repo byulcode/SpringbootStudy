@@ -1,10 +1,10 @@
 package com.example.chapter6.api;
 
 import com.example.chapter6.Util.ExceptionMessage;
-import com.example.chapter6.board.service.BoardService;
+import com.example.chapter6.service.BoardService;
 import com.example.chapter6.exception.BadRequestException;
 import com.example.chapter6.exception.InsertFailException;
-import com.example.chapter6.member.service.MemberService;
+import com.example.chapter6.service.MemberService;
 import com.example.chapter6.model.BoardVO;
 import com.example.chapter6.model.SearchHelper;
 import com.example.chapter6.payload.response.ApiResponse;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 
 @RestController

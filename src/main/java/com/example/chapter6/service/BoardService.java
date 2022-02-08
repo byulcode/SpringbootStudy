@@ -1,4 +1,4 @@
-package com.example.chapter6.board.service;
+package com.example.chapter6.service;
 
 import com.example.chapter6.model.BoardVO;
 import com.example.chapter6.model.SearchHelper;
