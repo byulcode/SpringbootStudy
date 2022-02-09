@@ -20,7 +20,7 @@ public interface BoardService {
 
     void updateBoardVO(BoardVO boardVO);
 
-    void deleteById(int id) throws Exception;
+    void deleteById(int id);
 
     public Map<String, String> formValidation(Errors errors);
 

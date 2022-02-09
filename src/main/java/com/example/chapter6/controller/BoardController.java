@@ -107,6 +107,7 @@ public class BoardController {
     ) {
 //        계정을 따라가도록 수정 해야함
         BoardVO boardVO = new BoardVO();
+        boardVO.setCode(1000);
         model.addAttribute("boardVO", boardVO);
         model.addAttribute("searchHelper", searchHelper);
         return "board/write";
@@ -193,7 +194,7 @@ public class BoardController {
     public String delete(
             @RequestParam(value = "del[]", defaultValue = "") int[] del,
             Model model
-    ) throws Exception {
+    ){
         logger.info("삭제 배열 - {}", del);
 
         Message message = new Message();

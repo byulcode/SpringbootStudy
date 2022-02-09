@@ -21,7 +21,7 @@ public interface BoardMapper {
 
     void updateBoardVO(BoardVO boardVO);
 
-    void deleteById(int id) throws Exception;
+    void deleteById(int id);
 
     void updateCount(int id);
 

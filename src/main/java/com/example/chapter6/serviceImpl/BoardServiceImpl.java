@@ -80,7 +80,7 @@ public class BoardServiceImpl implements BoardService {
 
     // 게시물 삭제
     @Override
-    public void deleteById(int id) throws Exception {
+    public void deleteById(int id) {
         boardMapper.deleteById(id);
     }
 

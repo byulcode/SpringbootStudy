@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @NoArgsConstructor
-public class BoardVO extends SearchHelper{
+public class BoardVO{
 
     private int id = 0;
     private int code;
