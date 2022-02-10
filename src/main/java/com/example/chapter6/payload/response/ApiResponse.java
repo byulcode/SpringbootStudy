@@ -13,7 +13,7 @@ import java.util.HashMap;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponse {
 
-    private final Boolean success;
+    private final Boolean success;  // 데이터가 정상적으로 전송되었는지
     private final String data;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:SS")
     private final LocalDateTime timestamp;
@@ -28,15 +28,15 @@ public class ApiResponse {
         this.map = null;
     }
 
-    public ApiResponse(Boolean success, String data, String couse) {
+    public ApiResponse(Boolean success, String data, String cause) {
         this.success = success;
         this.data = data;
-        this.cause = couse;
+        this.cause = cause;
         this.timestamp = LocalDateTime.now();
         this.map = null;
     }
 
-    public ApiResponse(Boolean success, String data,  HashMap<String, Object> map) {
+    public ApiResponse(Boolean success, String data, HashMap<String, Object> map) {
         this.success = success;
         this.cause = null;
         this.timestamp = LocalDateTime.now();

@@ -7,6 +7,7 @@ import org.springframework.validation.Errors;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public interface BoardService {
 
@@ -16,7 +17,7 @@ public interface BoardService {
 
     List<BoardVO> selectBoardVO();
 
-    BoardVO selectBoardVOById(int id) throws Exception;
+    Optional<BoardVO> selectBoardVOById(int id) throws Exception;
 
     void updateBoardVO(BoardVO boardVO);
 

@@ -30,6 +30,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -74,14 +75,14 @@ public class BoardController {
     ) throws Exception {
         if(id > 0){
             // 게시물 조회
-            BoardVO boardVO = boardService.selectBoardVOById(id);
+            Optional<BoardVO> boardVO = boardService.selectBoardVOById(id);
             model.addAttribute("boardVO", boardVO);
             model.addAttribute("searchHelper", searchHelper);
 
             logger.info(boardVO.toString());
 
-            if(boardVO.getTitle() != null && boardVO.getContent() != null){
-                List<UploadFileVO> fileList = uploadFileService.selectFileByBoardId(boardVO.getId());
+            if(boardVO.get().getTitle() != null && boardVO.get().getContent() != null){
+                List<UploadFileVO> fileList = uploadFileService.selectFileByBoardId(boardVO.get().getId());
                 model.addAttribute("uploadFileVO", fileList);
             } else {
                 model.addAttribute("uploadFileVO", null);
@@ -165,12 +166,12 @@ public class BoardController {
     ) throws Exception {
         if(id > 0){
             // 게시물 조회
-            BoardVO boardVO = boardService.selectBoardVOById(id);
+            Optional<BoardVO> boardVO = boardService.selectBoardVOById(id);
             model.addAttribute("boardVO", boardVO);
             model.addAttribute("searchHelper", searchHelper);
 
-            if(boardVO.getTitle() != null && boardVO.getContent() != null){
-                List<UploadFileVO> fileList = uploadFileService.selectFileByBoardId(boardVO.getId());
+            if(boardVO.isPresent()){
+                List<UploadFileVO> fileList = uploadFileService.selectFileByBoardId(boardVO.get().getId());
                 model.addAttribute("uploadFileVO", fileList);
             } else {
                 model.addAttribute("uploadFileVO", null);

@@ -13,6 +13,7 @@ import org.springframework.validation.FieldError;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -67,7 +68,7 @@ public class BoardServiceImpl implements BoardService {
 
     // 게시물 조회
     @Override
-    public BoardVO selectBoardVOById(int id) throws Exception {
+    public Optional<BoardVO> selectBoardVOById(int id) throws Exception {
         boardMapper.updateCount(id);
         return boardMapper.selectBoardVOById(id);
     }

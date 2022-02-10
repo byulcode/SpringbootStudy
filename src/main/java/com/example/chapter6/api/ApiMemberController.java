@@ -88,8 +88,7 @@ public class ApiMemberController {
         return new ApiResponse(true,"완료");
     }
 
-
-    // 아이디 중복 여부 체크크
+    // 아이디 중복 여부 체크
    @GetMapping("/exist/id/{userId}")
     public ApiResponse existId(@PathVariable String userId) throws Exception {
         if (userId.equals("")) throw new BadRequestException(ExceptionMessage.EMPTY_USER_ID);
@@ -97,9 +96,10 @@ public class ApiMemberController {
         Boolean result = memberService.duplicateId(userId);
 
         // true로 리턴되면 아이디가 선점되어 있다.
-        if(result) {
-            throw new ResourceAlreadyInUseException("입력하신 아이디","userId", userId);
-        }
+       if(result) return new ApiResponse(false,"사용중인 아이디 입니다.");
+//        if(result) {
+//            throw new ResourceAlreadyInUseException("입력하신 아이디","userId", userId);
+//        }
 
         return new ApiResponse(true,ExceptionMessage.USE_ID_AVAILABLE);
     }
@@ -113,7 +113,7 @@ public class ApiMemberController {
 
         // true로 리턴되면 email이 선점되어 있다.
         if(result) {
-            throw new ResourceAlreadyInUseException("입력하신 아이디","email", email);
+            if(result) return new ApiResponse(false,"사용중인 이메일 입니다.");
         }
 
         return new ApiResponse(true,ExceptionMessage.USE_EMAIL_AVAILABLE);
