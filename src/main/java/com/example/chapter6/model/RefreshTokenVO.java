@@ -17,7 +17,7 @@ public class RefreshTokenVO {
     private int id;
     private String refreshToken;
     private int refreshCount;
-    private int memberId;
+    private int memberId;   // 사용자 id가 아니고 id컬럼의 값
     private LocalDateTime regDate;
     private LocalDateTime modDate;
     private Instant expiryDate;

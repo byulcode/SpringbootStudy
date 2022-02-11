@@ -141,7 +141,7 @@ function viewArticle(id){
 
 $(function(){
 
-    // 모달에서 게시물 삭제
+    // 모달에서 게시물 삭제(게시물 삭제 후 모달 창 없애는거 아직 못함)
     $('#modalDel').click(function(){
         const id = $(this).data('rel');
         if(id){
@@ -307,13 +307,17 @@ $(function(){
     </div>
 </div>
 <script>
-    let accessToken = sessionStorage.getItem("accessToken");
+let accessToken = sessionStorage.getItem("accessToken");
 let refreshToken = sessionStorage.getItem("refreshToken");
 let pageNumber = 1;
+
+console.log(accessToken);
+console.log(refreshToken);
+
 //axios instance 생성
-    const instance = axios.create({
-        baseURL: 'http://localhost:8080/api',
-    });
+const instance = axios.create({
+    baseURL: 'http://localhost:8080/api',
+});
 if(accessToken && refreshToken){
 
     // request 전의 interceptor
@@ -357,12 +361,9 @@ if(accessToken && refreshToken){
 
                 return instance(originalRequest);
             }
-
             return Promise.reject(error);
         }
     );
-
-
     generateList(pageNumber);
 
 }else {
@@ -379,8 +380,8 @@ function generateList(page){
 
     instance.post('/board/list', searchHelper)
         .then((res) => {
+            console.log(res.data);
             const dataList = res.data.list;
-
             let resultHtml= '';
 
             for(let i=0; i<res.data.list.length; i++){
@@ -400,16 +401,14 @@ function generateList(page){
                 resultHtml += '<tr>';
             }
             $('#dataList').append(resultHtml);
-
             if(res.data.searchHelper.totalPageCnt <= pageNumber) $('#btnMore').hide();
-
             pageNumber++;
         });
 }
 
 // 더보기
 $('#btnMore').click(function(){
-    generateList();
+    generateList(pageNumber);
 });
 // 검색
 $('#searchForm').submit(function(e){
@@ -421,6 +420,7 @@ $('#searchForm').submit(function(e){
 // 게시물 삭제
 $('#btnDel').click(function(){
     for(let i=0; i<$('input[type=checkbox]:checked').length; i++){
+        console.log($('input[type=checkbox]:checked')[i].value)
         const id = $('input[type=checkbox]:checked')[i].value;    
         instance.delete('/board/delete/' + id)
             .then((res) => {

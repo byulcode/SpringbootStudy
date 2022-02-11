@@ -97,11 +97,11 @@ public class MemberServiceImpl implements MemberService {
             // 3. accessToken을 발급한다.
             // 4. refreshToken 발급한 정보와 accessToken 정보를 JSON으로 리턴.
 
-            // refresh_token 존재여부부
-           Boolean existMemberId = refreshTokenService.existMemberId(result.get().getId());
-
+            // refresh_token 존재여부
+           Boolean refreshTokenExist = refreshTokenService.existMemberId(result.get().getId());
            RefreshTokenVO refreshTokenVO = new RefreshTokenVO();
-            if(existMemberId){
+
+            if(refreshTokenExist){
                 // 갱신
                 refreshTokenVO = refreshTokenService.updateTokenCount(result.get().getId());
             }else {

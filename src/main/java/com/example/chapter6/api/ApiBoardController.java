@@ -63,7 +63,7 @@ public class ApiBoardController {
 
     // 게시물 저장
     @PostMapping("/save")
-    public ApiResponse boardSave(
+    public ResponseEntity boardSave(
             @RequestBody @Valid BoardVO boardVO, Errors errors
     ) throws Exception {
         boardVO.setRegId("api");
@@ -76,39 +76,39 @@ public class ApiBoardController {
                 logger.info(key, validate.get(key));
                 errorMap.put(key,validate.get(key));
             }
-            return new ApiResponse(false, ExceptionMessage.SAVE_FAIL, errorMap);
-//            return new ResponseEntity(errorMap, HttpStatus.CONFLICT );
+           // return new ApiResponse(false, ExceptionMessage.SAVE_FAIL, errorMap);
+            return new ResponseEntity(errorMap, HttpStatus.CONFLICT );
         }
         try{
             boardService.insertBoardVO(boardVO);
         }catch (Exception e){
             throw new InsertFailException(ExceptionMessage.SAVE_FAIL);
         }
-        return new ApiResponse(true,ExceptionMessage.SAVE_SUCCESS);
-//        return new ResponseEntity("OK", HttpStatus.OK);
+       // return new ApiResponse(true,ExceptionMessage.SAVE_SUCCESS);
+        return new ResponseEntity("OK", HttpStatus.OK);
     }
 
     // 게시물 수정
     @PutMapping("/update")
-    public ApiResponse boardUpdate(
+    public ResponseEntity boardUpdate(
             @RequestBody BoardVO boardVO
     ) throws Exception {
         boardVO.setRegId("api");
-        try {
-            boardService.updateBoardVO(boardVO);
-        }catch (Exception e){
-            throw new InsertFailException(ExceptionMessage.SAVE_FAIL);
-        }
-        return new ApiResponse(true,ExceptionMessage.SAVE_SUCCESS);
-
-//        int id = boardVO.getId();
-//        Optional<BoardVO> exist = boardService.selectBoardVOById(id);
-//        if(exist.isPresent()){
+//        try {
 //            boardService.updateBoardVO(boardVO);
-//            return new ResponseEntity("OK", HttpStatus.OK);
-//        }else {
-//            throw new BadRequestException(ExceptionMessage.NOT_FOUND_ARTICLE);
+//        }catch (Exception e){
+//            throw new InsertFailException(ExceptionMessage.SAVE_FAIL);
 //        }
+//        return new ApiResponse(true,ExceptionMessage.SAVE_SUCCESS);
+
+        int id = boardVO.getId();
+        Optional<BoardVO> exist = boardService.selectBoardVOById(id);
+        if(exist.isPresent()){
+            boardService.updateBoardVO(boardVO);
+            return new ResponseEntity("OK", HttpStatus.OK);
+        }else {
+            throw new BadRequestException(ExceptionMessage.NOT_FOUND_ARTICLE);
+        }
 
     }
 

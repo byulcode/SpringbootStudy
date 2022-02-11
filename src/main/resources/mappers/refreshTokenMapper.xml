@@ -8,14 +8,12 @@
     <!-- 토큰으로 정보 조회 -->
     <select id="selectByToken" parameterType="String" resultType="RefreshTokenVO">
         SELECT
-        r.id,
-        r.refresh_token,
-        r.refresh_count,
-        r.member_id,
-        r.reg_date,
-        r.mod_date,
-        r.expiry_date,
-        m.member_id AS memberNm
+            r.id,
+            r.refresh_token,
+            r.refresh_count,
+            r.expiry_date,
+            r.member_id,
+            m.user_id AS userNm
         FROM refresh_token r left join member m on r.member_id = m.id
         WHERE refresh_token = #{refreshToken}
     </select>
@@ -50,7 +48,7 @@
         WHERE id = #{id}
     </delete>
 
-    <!-- 토큰 카운트 증가 -->
+    <!-- 토큰 갱신 및 카운트 증가 -->
     <update id="updateTokenCount" parameterType="RefreshTokenVO">
         UPDATE refresh_token SET
             refresh_token = #{refreshToken},

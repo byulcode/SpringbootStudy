@@ -164,8 +164,8 @@ public class ApiMemberController {
             memberVO.setEmail(email);
             memberVO.setUserId(userId);
 
+            String id = memberService.findUserId(memberVO);
             try {
-                String id = memberService.findUserId(memberVO);
                 if(id == null){
                     //계정 없음
                     throw new UserNotFoundException(ExceptionMessage.NOT_FOUND_USER_ID);
