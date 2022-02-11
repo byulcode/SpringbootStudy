@@ -14,6 +14,6 @@ public class FileMapVO {
     private int id;
     //board 테이블의 id
     private int boardId;
-    //upload_file 테이블의 아이디디
+    //upload_file 테이블의 아이디
    private int fileId;
 }

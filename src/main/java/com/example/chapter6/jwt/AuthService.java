@@ -49,13 +49,13 @@ public class AuthService {
         if(refreshTokenExistCheck.isPresent()){
             refreshTokenService.verifyExpiration(refreshTokenExistCheck.get());
 
-            RefreshTokenVO generateTokens = refreshTokenService.updateTokenCount(refreshTokenExistCheck.get().getUserId());
+            RefreshTokenVO generateTokens = refreshTokenService.updateTokenCount(refreshTokenExistCheck.get().getMemberId());
 
             String accessToken = generateToken(refreshTokenExistCheck.get().getUserNm());
             JwtAuthenticationResponse response = new JwtAuthenticationResponse();
             response.setExpiryDuration(generateTokens.getExpiryDate().toEpochMilli());
             response.setAccessToken(accessToken);
-            response.setRefreshToken(generateTokens.getToken());
+            response.setRefreshToken(generateTokens.getRefreshToken());
             return response;
         }else {
             throw new UserNotFoundException("refresh_token 정보가 없습니다.");

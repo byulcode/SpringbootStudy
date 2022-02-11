@@ -9,36 +9,36 @@
     <select id="selectByToken" parameterType="String" resultType="RefreshTokenVO">
         SELECT
         r.id,
-        r.token,
+        r.refresh_token,
         r.refresh_count,
-        r.user_id,
+        r.member_id,
         r.reg_date,
         r.mod_date,
         r.expiry_date,
-        m.user_id AS userNm
-        FROM refresh_token r left join member m on r.user_id = m.id
-        WHERE token = #{token}
+        m.member_id AS memberNm
+        FROM refresh_token r left join member m on r.member_id = m.id
+        WHERE refresh_token = #{refreshToken}
     </select>
 
     <!-- member id 존재 여부 -->
     <select id="existMemberId" parameterType="int" resultType="boolean">
         SELECT IF(COUNT(*) >= 1, 1, 0)
         FROM refresh_token
-        WHERE user_id = #{id}
+        WHERE member_id = #{id}
     </select>
 
     <!-- 토큰 최초 생성 -->
     <insert id="insertRefreshToken" parameterType="RefreshTokenVO">
         INSERT INTO refresh_token (
-        token,
+        refresh_token,
         refresh_count,
-        user_id,
+        member_id,
         reg_date,
         expiry_date
         ) VALUES (
-        #{token},
+        #{refreshToken},
         1,
-        #{userId},
+        #{memberId},
         NOW(),
         #{expiryDate}
         )
@@ -53,11 +53,11 @@
     <!-- 토큰 카운트 증가 -->
     <update id="updateTokenCount" parameterType="RefreshTokenVO">
         UPDATE refresh_token SET
-        token = #{token},
-        refresh_count = refresh_count + 1,
-        expiry_date = #{expiryDate},
-        mod_date = NOW()
-        WHERE user_id = #{userId}
+            refresh_token = #{refreshToken},
+            refresh_count = refresh_count + 1,
+            expiry_date = #{expiryDate},
+            mod_date = NOW()
+        WHERE member_id = #{memberId}
     </update>
 
 </mapper>

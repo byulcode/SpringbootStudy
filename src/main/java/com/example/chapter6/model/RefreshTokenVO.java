@@ -15,9 +15,9 @@ import java.time.LocalDateTime;
 public class RefreshTokenVO {
 
     private int id;
-    private String token;
+    private String refreshToken;
     private int refreshCount;
-    private int userId;
+    private int memberId;
     private LocalDateTime regDate;
     private LocalDateTime modDate;
     private Instant expiryDate;

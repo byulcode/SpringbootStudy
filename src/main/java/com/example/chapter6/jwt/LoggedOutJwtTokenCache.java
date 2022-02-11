@@ -21,6 +21,7 @@ public class LoggedOutJwtTokenCache {
         this.jwtTokenProvider = jwtTokenProvider;
         this.tokenEventMap = ExpiringMap.builder()
                 .variableExpiration()
+                .maxSize(maxSize)
                 .build();
     }
 

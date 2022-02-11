@@ -14,7 +14,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-
+// db에 저장하는 서비스
 @Slf4j
 @Service
 public class UploadFileService {
@@ -30,6 +30,7 @@ public class UploadFileService {
         this.rootLocation = Paths.get(uploadPath);
     }
 
+    // 파일 존재 여부
     public Path loadPath(String fileName){
         return rootLocation.resolve(fileName);
     }
@@ -56,9 +57,13 @@ public class UploadFileService {
     }
 
     // 파일 저장
-    public UploadFileVO saveFile(MultipartFile file) throws Exception {
+    public UploadFileVO store(MultipartFile file) throws Exception {
 
-        if (file.isEmpty()) throw new Exception("파일 저장 실패");
+        if (file.isEmpty()) {
+            log.info("file - {}", file);
+            //-> 왜 오류뜨는지 모르겠음
+            //throw new Exception("파일 저장 실패");
+        }
 
         String saveFileName = UploadFile.fileSave(rootLocation.toString(), file);
         log.info("saveFileName - {}", saveFileName);

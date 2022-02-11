@@ -39,13 +39,23 @@
         <hr>
         <div class="d-flex justify-content-center mb-3">
             <button type="submit" class="btn btn-success">저장</button>
-            <a th:href="@{/board/list(srchCode=${searchHelper.srchCode}, srchType=${searchHelper.srchType}, srchKeyword=${searchHelper.srchKeyword})}"
-               class="btn btn-secondary">취소</a>
+           <!-- <a th:href="@{/board/list(srchCode=${searchHelper.srchCode}, srchType=${searchHelper.srchType}, srchKeyword=${searchHelper.srchKeyword})}"
+               class="btn btn-secondary">취소</a> -->
+            <a href="/board/list" class="btn btn-secondary">취소</a>
         </div>
 
         <script>
             $(function(){
 
+            $('.btnDel').click(function(){
+                const fileId = $(this).attr('fileId');
+                if(fileId){
+                    $.get('http://localhost:8080/board/deleteFile/' + fileId, function(res){
+                        console.log(res);
+                        if(res.success) location.reload();
+                    });
+                }
+            });
 
                 var oEditors = [];
                 nhn.husky.EZCreator.createInIFrame({

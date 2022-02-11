@@ -1,5 +1,5 @@
 package com.example.chapter6.api;
-
+// 비동기통신
 import com.example.chapter6.Util.ExceptionMessage;
 import com.example.chapter6.Util.Util;
 import com.example.chapter6.event.OnLogoutSuccessEvent;
@@ -21,9 +21,11 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.text.html.Option;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/member")
@@ -162,18 +164,21 @@ public class ApiMemberController {
             memberVO.setEmail(email);
             memberVO.setUserId(userId);
 
-            String id = memberService.findUserId(memberVO);
-
-            if(id == null){
-                //계정 없음
-                throw new UserNotFoundException("계정을 찾을 수 없습니다.");
-            }else {
-                //계정이 있으면 비번을 임의로 변경하고 고지한다.
-                String pw = Util.generateRandomString(10);
-                logger.info("pw -{}", pw);
-                memberVO.setPassword(pw);
-                memberService.updatePassword(memberVO);
-                return new ApiResponse(true,"변경된 비밀번호는 " + pw + "입니다.");
+            try {
+                String id = memberService.findUserId(memberVO);
+                if(id == null){
+                    //계정 없음
+                    throw new UserNotFoundException(ExceptionMessage.NOT_FOUND_USER_ID);
+                }else {
+                    //계정이 있으면 비번을 임의로 변경하고 고지한다.
+                    String pw = Util.generateRandomString(10);
+                    logger.info("pw -{}", pw);
+                    memberVO.setPassword(pw);
+                    memberService.updatePassword(memberVO);
+                    return new ApiResponse(true,"변경된 비밀번호는 " + pw + "입니다.");
+                }
+            }catch (Exception e){
+                throw new UserNotFoundException(ExceptionMessage.NOT_FOUND_USER_ID);
             }
         }
         throw new BadRequestException(ExceptionMessage.EMPTY_INFO);

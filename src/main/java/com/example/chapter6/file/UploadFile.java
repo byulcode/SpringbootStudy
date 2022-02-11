@@ -26,13 +26,13 @@ public class UploadFile {
         String fileExtension = extractFileExtension(originalFileName);
         String saveFileName = generatedId + "." + fileExtension;
 
+        // 저장 경로(연-월-일)
         String savePath = generatedPath(uploadPath);
 
         File target = new File(uploadPath + savePath, saveFileName);
         FileCopyUtils.copy(file.getBytes(), target);
 
         return filePath(uploadPath, savePath, saveFileName);
-
     }
 
     private static String filePath(String uploadPath, String path, String fileName){

@@ -30,12 +30,12 @@ public class RefreshTokenService {
         return refreshTokenMapper.selectByToken(token);
     }
 
-    public RefreshTokenVO insertToken(int id) {
+    public RefreshTokenVO insertRefreshToken(int id) {
         RefreshTokenVO refreshTokenVO = new RefreshTokenVO();
-        refreshTokenVO.setToken(UUID.randomUUID().toString());
+        refreshTokenVO.setRefreshToken(UUID.randomUUID().toString());
         refreshTokenVO.setExpiryDate(Instant.now().plusMillis(refreshTokenDurationMs));
         refreshTokenVO.setRefreshCount(0);
-        refreshTokenVO.setUserId(id);
+        refreshTokenVO.setMemberId(id);
         refreshTokenMapper.insertRefreshToken(refreshTokenVO);
         return refreshTokenVO;
     }
@@ -43,7 +43,7 @@ public class RefreshTokenService {
     // refresh_token 유효기간 검증
     public void verifyExpiration(RefreshTokenVO refreshTokenVO){
         if (refreshTokenVO.getExpiryDate().compareTo(Instant.now()) < 0) {
-            throw new RefreshTokenExpirationException(refreshTokenVO.getToken(), "토큰 유효기간 만료.");
+            throw new RefreshTokenExpirationException(refreshTokenVO.getRefreshToken(), "토큰 유효기간 만료.");
         }
     }
 
@@ -55,8 +55,8 @@ public class RefreshTokenService {
     public RefreshTokenVO updateTokenCount(int id) {
         RefreshTokenVO refreshTokenVO = new RefreshTokenVO();
         refreshTokenVO.setExpiryDate(Instant.now().plusMillis(refreshTokenDurationMs));
-        refreshTokenVO.setToken(UUID.randomUUID().toString());
-        refreshTokenVO.setUserId(id);
+        refreshTokenVO.setRefreshToken(UUID.randomUUID().toString());
+        refreshTokenVO.setMemberId(id);
         refreshTokenMapper.updateTokenCount(refreshTokenVO);
         return refreshTokenVO;
     }

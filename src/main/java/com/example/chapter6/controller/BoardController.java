@@ -76,12 +76,12 @@ public class BoardController {
         if(id > 0){
             // 게시물 조회
             Optional<BoardVO> boardVO = boardService.selectBoardVOById(id);
-            model.addAttribute("boardVO", boardVO);
+            model.addAttribute("boardVO", boardVO.get());
             model.addAttribute("searchHelper", searchHelper);
 
             logger.info(boardVO.toString());
 
-            if(boardVO.get().getTitle() != null && boardVO.get().getContent() != null){
+            if(boardVO.isPresent()){
                 List<UploadFileVO> fileList = uploadFileService.selectFileByBoardId(boardVO.get().getId());
                 model.addAttribute("uploadFileVO", fileList);
             } else {
@@ -138,15 +138,15 @@ public class BoardController {
                 // 저장
                 boardService.insertBoardVO(boardVO);
             }
-//  파일 저장에 오류가 있음
-//            for (int i = 0; i < multipartFile.size(); i++){
-//               UploadFileVO uploadFileVO = uploadFileService.saveFile(multipartFile.get(i));
-//               logger.info("uploadFileVO - {}" , uploadFileVO);
-//               FileMapVO fileMapVO = new FileMapVO();
-//               fileMapVO.setFileId(uploadFileVO.getId());
-//               fileMapVO.setBoardId(boardVO.getId());
-//               fIleMapService.insertFileMap(fileMapVO);
-//            }
+            //  파일 저장에 오류가 있음
+            for (int i = 0; i < multipartFile.size(); i++){
+               UploadFileVO uploadFileVO = uploadFileService.store(multipartFile.get(i));
+               logger.info("uploadFileVO - {}" , uploadFileVO);
+               FileMapVO fileMapVO = new FileMapVO();
+               fileMapVO.setFileId(uploadFileVO.getId());
+               fileMapVO.setBoardId(boardVO.getId());
+               fIleMapService.insertFileMap(fileMapVO);
+            }
 
         }else{
             // 세션 없음 (로그인 안됨)
@@ -167,7 +167,7 @@ public class BoardController {
         if(id > 0){
             // 게시물 조회
             Optional<BoardVO> boardVO = boardService.selectBoardVOById(id);
-            model.addAttribute("boardVO", boardVO);
+            model.addAttribute("boardVO", boardVO.get());
             model.addAttribute("searchHelper", searchHelper);
 
             if(boardVO.isPresent()){
@@ -227,23 +227,18 @@ public class BoardController {
         Files.createDirectories(path);
 
         String generateFileName = UUID.randomUUID().toString();
-
         logger.info("선택한 파일 명 - {}", generateFileName);
 
         //파일명에서 . 위치 찾기 >> lastIndexOf abc.jpg abc.def.jpg
-        //
         int dot = multipartFile.getOriginalFilename().lastIndexOf(".");
-
         logger.info("dot - {}", dot);
 
         String extension = "";
 
         if(-1 != dot && multipartFile.getOriginalFilename().length() - 1 > dot){
-            extension = multipartFile.getOriginalFilename().substring(dot+1);
+            extension = multipartFile.getOriginalFilename().substring(dot + 1);
         }
-
         logger.info("확장명 - {}", extension);
-
 
         File file = new File("C:/upload_file/" + generateFileName + "." + extension);
 
@@ -252,6 +247,7 @@ public class BoardController {
         return "test";
     }
 
+    // 파일 다운로드
     @GetMapping("/file/download")
     @ResponseBody
     public ResponseEntity fileDownload(
@@ -260,7 +256,7 @@ public class BoardController {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\""+ new String(name.getBytes(StandardCharsets.UTF_8), "ISO-8859-1") + "\"");
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM); // 파일 다운로드 받기 위함
 
         Path path = Paths.get("C:/upload_file/" + name).toAbsolutePath().normalize();
         logger.info(String.valueOf(path));
@@ -271,7 +267,7 @@ public class BoardController {
 
     @GetMapping("/file/{fileId}")
     @ResponseBody
-    public ResponseEntity showFile(@PathVariable int fileId) throws Exception {
+    public ResponseEntity showFile(@PathVariable int fileId) {
         try {
             UploadFileVO uploadFileVO = uploadFileService.load(fileId);
             String fileName = uploadFileVO.getFileName();
@@ -302,7 +298,7 @@ public class BoardController {
         if(result){
             return new ApiResponse(true, "삭제 완료");
         }else {
-            return new ApiResponse(false, "삭제 완료");
+            return new ApiResponse(false, "삭제 오류");
         }
     }
 

@@ -16,6 +16,7 @@ import org.springframework.validation.FieldError;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.text.html.Option;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -71,9 +72,9 @@ public class MemberServiceImpl implements MemberService {
 //    로그인 처리
     @Override
     public Boolean loginProcess(MemberVO memberVO, HttpServletRequest request)  {
-        MemberVO result = memberMapper.loginProcess(memberVO);
+        Optional<MemberVO> result = memberMapper.loginProcess(memberVO);
 
-        if(result != null){
+        if(result.isPresent()){
             //세션 정보 생성
             HttpSession session = request.getSession();
             session.setAttribute("memberVO", result);
@@ -83,49 +84,44 @@ public class MemberServiceImpl implements MemberService {
         return false;
     }
 
-    @Override //없애야됨
-    public JwtAuthenticationResponse loginProcess(MemberVO memberVO) {
-        return null;
-    }
 
-//    //api 로그인 처리
-//    @Override
-//    public JwtAuthenticationResponse loginProcess(MemberVO memberVO) {
-//        MemberVO result = memberMapper.loginProcess(memberVO);
-//
-//        if(result.isPresent()){
-//            // 로그인 result 이후
-//            // 1. refresh_token 테이블에 member 테이블의 id 값이 존재하면 토큰을 갱신한다. update
-//            // 2. refresh_token 테이블에 member 테이블의 id 값이 존재하지 않으면 토큰을 생성 후 insert한다
-//            // 3. accessToken을 발급한다.
-//            // 4. refreshToken 발급한 정보와 accessToken 정보를 JSON으로 리턴.
-//
-//            // refresh_token 존재여부부
-//           Boolean existMemberId = refreshTokenService.existMemberId(result.get().getId());
-//
-//           RefreshTokenVO refreshTokenVO = new RefreshTokenVO();
-//
-//            if(existMemberId){
-//                // 갱신
-//                refreshTokenVO = refreshTokenService.updateTokenCount(result.get().getId());
-//            }else {
-//                // 생성
-//                refreshTokenVO = refreshTokenService.insertToken(result.get().getId());
-//            }
-//
-//            String accessToken = authService.generateToken(result.get().getUserId());
-//            JwtAuthenticationResponse response = new JwtAuthenticationResponse();
-//            response.setAccessToken(accessToken);
-//            response.setRefreshToken(refreshTokenVO.getToken());
-//            long instant = refreshTokenVO.getExpiryDate().getEpochSecond();
-//            response.setExpiryDuration(instant);
-//
-//            return response;
-//
-//        }else {
-//            throw  new BadRequestException("사용자 정보가 없습니다.");
-//        }
-//    }
+    //api 로그인 처리
+    @Override
+    public JwtAuthenticationResponse loginProcess(MemberVO memberVO) {
+        Optional<MemberVO> result = memberMapper.loginProcess(memberVO);
+
+        if(result.isPresent()){
+            // 로그인 result 이후
+            // 1. refresh_token 테이블에 member 테이블의 id 값이 존재하면 토큰을 갱신한다. update
+            // 2. refresh_token 테이블에 member 테이블의 id 값이 존재하지 않으면 토큰을 생성 후 insert한다
+            // 3. accessToken을 발급한다.
+            // 4. refreshToken 발급한 정보와 accessToken 정보를 JSON으로 리턴.
+
+            // refresh_token 존재여부부
+           Boolean existMemberId = refreshTokenService.existMemberId(result.get().getId());
+
+           RefreshTokenVO refreshTokenVO = new RefreshTokenVO();
+            if(existMemberId){
+                // 갱신
+                refreshTokenVO = refreshTokenService.updateTokenCount(result.get().getId());
+            }else {
+                // 생성
+                refreshTokenVO = refreshTokenService.insertRefreshToken(result.get().getId());
+            }
+
+            String accessToken = authService.generateToken(result.get().getUserId());
+            JwtAuthenticationResponse response = new JwtAuthenticationResponse();
+            response.setAccessToken(accessToken);
+            response.setRefreshToken(refreshTokenVO.getRefreshToken());
+            long instant = refreshTokenVO.getExpiryDate().getEpochSecond();
+            response.setExpiryDuration(instant);
+
+            return response;
+
+        }else {
+            throw new BadRequestException("사용자 정보가 없습니다.");
+        }
+    }
 
 //    아이디 찾기
     @Override
